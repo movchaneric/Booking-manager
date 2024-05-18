@@ -47,6 +47,9 @@ const MainNav = () => {
   );
 };
 
+
+
+//-----------Styling------------
 const NavItems = styled.ul`
   display: flex;
   flex-direction: column;
