@@ -24,7 +24,6 @@ const StyledApplayout = styled.div`
 `;
 
 const Main = styled.div`
-  background-color: red;
   padding: 4rem 4.8rem 6.4rem;
 `;
 
