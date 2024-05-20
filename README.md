@@ -26,10 +26,7 @@ Hotel management app is a full-featured React web application that allows hotel 
 - [Key Features](#key-features)
 - [My process](#my-process)
   - [Built with](#built-with)
-  
 - [Installation](#installation)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
 
 ## Key Features
 
@@ -71,7 +68,6 @@ Hotel management app is a full-featured React web application that allows hotel 
 
 - Dark mode functionality is integrated to enhance user experience in low-light environments.
 
-
 ### Built with
 
 - React
@@ -84,3 +80,29 @@ Hotel management app is a full-featured React web application that allows hotel 
 - Recharts
 - Styled Components
 - Vite
+
+### Installation
+
+- Clone this repo:
+
+```sh
+git clone https://github.com/username/Booking-manager.git
+```
+
+- Install dependencies:
+
+```sh
+npm install
+```
+
+- Build command:
+
+```sh
+npm run build
+```
+
+- Live server:
+
+```sh
+npm run dev
+```
