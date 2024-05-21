@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Logo = () => {
-  return <Image src="../../public/logo.png" alt="company-logo" />;
+  return <Image src="/logo.png" alt="company-logo" />;
 };
 
 const Image = styled.img`

@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="./public/logo.png" alt="logo" width="90" height="auto">
+  <img src="./logo.png" alt="logo" width="90" height="auto">
 
   <h2>Hotel management app</h2>
 

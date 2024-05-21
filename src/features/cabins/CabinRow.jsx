@@ -1,11 +1,7 @@
 import styled from "styled-components";
-import Row from "../../components/Row";
+
 import { formatCurrency } from "../../utils/helpers";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
 
@@ -22,37 +18,51 @@ const CabinRow = ({ cabin }) => {
   //Used to mutation state in the queryClient
   const queryClient = useQueryClient();
 
+  //Delete cabin
   const { mutate, isPending } = useMutation({
     mutationFn: (id) => deleteCabin(id),
     onSuccess: () => {
-      toast.success("Cabin has been deleted");
+      toast.success("Cabin has been deleted.");
       queryClient.invalidateQueries(["cabin"]);
     },
+    onError: (err) => toast.error(err.message),
   });
 
   //isPending is used just to disable the delete button (UI)
   return (
-    <StyledCabinRow>
+    <TableRow role="row">
       <Image src={image} alt={name} />
-      <StyledRow>{name}</StyledRow>
-      <StyledRow>{maxCapacity}</StyledRow>
+      <Cabin>{name}</Cabin>
+      <Capacity>Fits up to {maxCapacity} guests</Capacity>
       <StyledRow>{formatCurrency(regularPrice)}</StyledRow>
-      <StyledRow>{formatCurrency(discount)}$</StyledRow>
+      <Discount>{formatCurrency(discount)}$</Discount>
       <button onClick={() => mutate(cabinId)} disabled={isPending}>
         Delete
       </button>
-    </StyledCabinRow>
+    </TableRow>
   );
 };
 
-const StyledCabinRow = styled.div`
+const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.4fr;
-  gap: 2.4rem;
-  padding: 1.6rem 2.4rem;
+  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+  column-gap: 2.4rem;
+  align-items: center;
+  padding: 1.4rem 2.4rem;
 
-  background-color: white;
-  border: 1px solid var(--color-grey-50);
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-grey-100);
+  }
+`;
+const Capacity = styled.div`
+  font-family: "Sono";
+  font-weight: 500;
+  font-size: 1.6rem;
+`;
+const Discount = styled.div`
+  font-family: "Sono";
+  font-weight: 500;
+  color: var(--color-green-700);
 `;
 
 const Image = styled.img`
@@ -67,6 +77,12 @@ const Image = styled.img`
 const StyledRow = styled.div`
   font-family: "sono";
   font-weight: 500;
+  font-size: 1.6rem;
+`;
+
+const Cabin = styled.div`
+  font-family: "sono";
+  font-weight: 600;
   font-size: 1.6rem;
 `;
 
