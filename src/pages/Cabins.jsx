@@ -22,7 +22,7 @@ const Cabins = () => {
         <Button onClick={() => setShowForm((prevState) => !prevState)}>
           Add new cabin
         </Button>
-        {showForm && <CreateCabinForm/>}
+        {showForm && <CreateCabinForm setShowForm={setShowForm} />}
       </Row>
     </>
   );

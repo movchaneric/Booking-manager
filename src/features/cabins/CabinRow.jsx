@@ -4,8 +4,12 @@ import { formatCurrency } from "../../utils/helpers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import Button from "../../components/Button";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
 
 const CabinRow = ({ cabin }) => {
+  const [showForm, setShowForm] = useState(false);
   const {
     name,
     maxCapacity,
@@ -30,16 +34,32 @@ const CabinRow = ({ cabin }) => {
 
   //isPending is used just to disable the delete button (UI)
   return (
-    <TableRow role="row">
-      <Image src={image} alt={name} />
-      <Cabin>{name}</Cabin>
-      <Capacity>Fits up to {maxCapacity} guests</Capacity>
-      <StyledRow>{formatCurrency(regularPrice)}</StyledRow>
-      <Discount>{formatCurrency(discount)}$</Discount>
-      <button onClick={() => mutate(cabinId)} disabled={isPending}>
-        Delete
-      </button>
-    </TableRow>
+    <>
+      <TableRow role="row">
+        <Image src={image} alt={name} />
+        <Cabin>{name}</Cabin>
+        <Capacity>Fits up to {maxCapacity} guests</Capacity>
+        <StyledRow>{formatCurrency(regularPrice)}</StyledRow>
+        <Discount>{formatCurrency(discount)}</Discount>
+        <StyledButtons>
+          <Button
+            variation="danger"
+            size="small"
+            onClick={() => mutate(cabinId)}
+            disabled={isPending}
+          >
+            Delete
+          </Button>
+          <Button
+            size="small"
+            onClick={() => setShowForm((prevState) => !prevState)}
+          >
+            Update
+          </Button>
+        </StyledButtons>
+      </TableRow>
+      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+    </>
   );
 };
 
@@ -84,6 +104,11 @@ const Cabin = styled.div`
   font-family: "sono";
   font-weight: 600;
   font-size: 1.6rem;
+`;
+
+const StyledButtons = styled.div`
+  display: flex;
+  gap: 1.2rem;
 `;
 
 export default CabinRow;

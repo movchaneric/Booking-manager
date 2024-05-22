@@ -21,3 +21,23 @@ export async function deleteCabin(cabinId) {
     console.log("deleteCabin error", err);
   }
 }
+
+export async function addNewCabin(newCabin) {
+  const { name, maxCapacity, regularPrice, discount, description, image } =
+    newCabin;
+
+  try {
+    const response = await axios.post(`http://localhost:8080/cabin`, {
+      name,
+      maxCapacity,
+      regularPrice,
+      discount,
+      description,
+      image,
+    });
+    console.log("add cabin response: ", response);
+    return response;
+  } catch (err) {
+    console.log("addNewCabin error: ", err);
+  }
+}
