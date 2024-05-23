@@ -10,8 +10,6 @@ const CabinTable = () => {
     queryFn: getCabins,
   });
 
-  console.log(isLoading);
-
   if (isLoading) return <Ring />;
 
   return (

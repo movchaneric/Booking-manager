@@ -37,6 +37,7 @@ const CabinRow = ({ cabin }) => {
     <>
       <TableRow role="row">
         <Image src={image} alt={name} />
+
         <Cabin>{name}</Cabin>
         <Capacity>Fits up to {maxCapacity} guests</Capacity>
         <StyledRow>{formatCurrency(regularPrice)}</StyledRow>
@@ -63,8 +64,10 @@ const CabinRow = ({ cabin }) => {
   );
 };
 
+// Styles
 const TableRow = styled.div`
   display: grid;
+  /* 0.6fr for the image col- add in the future */
   grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
@@ -92,6 +95,7 @@ const Image = styled.img`
   object-fit: cover;
   object-position: center;
   transform: scale(1.5) translateX(-7px);
+  border: 1px solid var(--color-grey-100);
 `;
 
 const StyledRow = styled.div`

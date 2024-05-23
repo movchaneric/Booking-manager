@@ -41,3 +41,14 @@ export async function addNewCabin(newCabin) {
     console.log("addNewCabin error: ", err);
   }
 }
+
+export async function updateCabin(data, cabinId) {
+  console.log("updated data: ", data); // ok
+  console.log("id: ", cabinId); //ok
+
+  try {
+    await axios.put(`http://localhost:8080/edit-cabin/${cabinId}`, data);
+  } catch (err) {
+    console.log("editCabin error: ", err);
+  }
+}
