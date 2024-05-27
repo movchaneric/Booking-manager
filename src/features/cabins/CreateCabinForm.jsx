@@ -9,11 +9,13 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addNewCabin, updateCabin } from "../../services/apiCabins";
 import toast from "react-hot-toast";
+import useCreateCabin from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
 
-const CreateCabinForm = ({ cabinToEdit = {} }) => {
-  const queryClient = useQueryClient();
-
+const CreateCabinForm = ({ cabinToEdit = {}, onCloseModal, isModal }) => {
+  const { createCabin, isCreating } = useCreateCabin();
   const { _id: editId, ...editValues } = cabinToEdit;
+  const { editCabin, isEditing } = useEditCabin(editId);
 
   // check if there is cabin that needs an edit
   const isEditSession = Boolean(editId);
@@ -24,31 +26,6 @@ const CreateCabinForm = ({ cabinToEdit = {} }) => {
 
   //get all error messages, each one is seperated by the registered name.
   const { errors } = formState;
-
-  //A. CREATE new cabin
-  const { mutate: createCabin, isLoading: isCreating } = useMutation({
-    mutationFn: (newCabin) => addNewCabin(newCabin),
-    onSuccess: () => {
-      toast.success("New cabin has been created");
-      queryClient.invalidateQueries({ queryKey: ["cabin"] });
-      reset();
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
-
-  //B. EDIT existing cabin
-  const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: (data) => updateCabin(data, editId),
-    onSuccess: () => {
-      toast.success("Cabin has been edited succesfuly");
-      queryClient.invalidateQueries({ queryKey: ["cabin"] });
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
 
   function onSubmit(data) {
     if (isEditSession) {
@@ -65,7 +42,10 @@ const CreateCabinForm = ({ cabinToEdit = {} }) => {
   const isWorking = isEditing || isCreating;
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={isModal ? "modal" : "regular"}
+    >
       {/* Form rows */}
       <FormRow label="Cabin name">
         <Input
@@ -139,7 +119,11 @@ const CreateCabinForm = ({ cabinToEdit = {} }) => {
       {/* Buttons */}
       <FormRow>
         {/* type is an HTML attribute! - to reset form*/}
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
 

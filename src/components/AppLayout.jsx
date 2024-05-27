@@ -10,7 +10,9 @@ const AppLayout = () => {
       <Header />
       <Sidebar />
       <Main>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledApplayout>
   );
@@ -25,6 +27,13 @@ const StyledApplayout = styled.div`
 
 const Main = styled.div`
   padding: 4rem 4.8rem 6.4rem;
+  /* background-color: red; */
+`;
+
+const Container = styled.div`
+  /* background-color: green; */
+  padding: 4rem 4.8rem 6.4rem;
+  max-width: 120rem;
 `;
 
 export default AppLayout;

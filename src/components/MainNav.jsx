@@ -47,8 +47,6 @@ const MainNav = () => {
   );
 };
 
-
-
 //-----------Styling------------
 const NavItems = styled.ul`
   display: flex;
@@ -90,7 +88,7 @@ const StyledNavLink = styled(NavLink)`
   &:active svg,
   &.active:link svg,
   &.active:visited svg {
-    color: var(--color-green-700);
+    color: var(--color-brand-700);
   }
 `;
 

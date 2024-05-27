@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "../../services/apiCabins";
-import { Ring } from "react-css-spinners";
+
 import styled from "styled-components";
 import CabinRow from "./CabinRow";
+import Spinner from "../../components/Spinner";
 
 const CabinTable = () => {
   const { data: cabins, isLoading } = useQuery({
@@ -10,7 +11,7 @@ const CabinTable = () => {
     queryFn: getCabins,
   });
 
-  if (isLoading) return <Ring />;
+  if (isLoading) return <Spinner />;
 
   return (
     <>
