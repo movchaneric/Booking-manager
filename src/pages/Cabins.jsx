@@ -2,6 +2,7 @@ import Heading from "../components/Heading";
 import CabinTable from "../features/cabins/CabinTable";
 import Row from "../components/Row";
 import AddCabin from "../features/cabins/AddCabin";
+import { useEffect } from "react";
 
 const Cabins = () => {
   return (

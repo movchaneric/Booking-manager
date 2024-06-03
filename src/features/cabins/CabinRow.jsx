@@ -10,11 +10,16 @@ import CreateCabinForm from "./CreateCabinForm";
 import { HiArchiveBox, HiPencil, HiSquare2Stack } from "react-icons/hi2";
 import useDuplicateCabin from "./useCreateCabin";
 import { useDeleteCabin } from "./useDeleteCabin";
+import Modal from "../../components/Modal";
+import CabinDeletForm from "./CabinDeleteForm";
 
 const CabinRow = ({ cabin }) => {
   //Used to mutation state in the queryClient
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isDeleteOpenModal, setIsDeleteOpenModal] = useState(false);
+
   const { duplicateCabin, isDuplicating } = useDuplicateCabin();
   const { deleteCabin, isDeleting } = useDeleteCabin();
 
@@ -57,18 +62,41 @@ const CabinRow = ({ cabin }) => {
           <Button
             variation="danger"
             size="small"
-            onClick={() => deleteCabin(cabinId)}
+            onClick={() => setIsDeleteOpenModal((prevState) => !prevState)}
             disabled={isDeleting}
           >
             <HiArchiveBox />
+
+            {/* Open delete modal form */}
+            {isDeleteOpenModal && (
+              <Modal
+                onClose={() => setIsOpenModal(false)}
+                isOpenModal={isOpenModal}
+              >
+                <CabinDeletForm />
+              </Modal>
+            )}
           </Button>
 
           {/* EDIT */}
           <Button
             size="small"
-            onClick={() => setShowForm((prevState) => !prevState)}
+            onClick={() => setIsOpenModal((prevState) => !prevState)}
           >
             <HiPencil />
+            {/* Open edit Modal when edit button is clicked */}
+            {isOpenModal && (
+              <Modal
+                onClose={() => setIsOpenModal(false)}
+                isOpenModal={isOpenModal}
+              >
+                <CreateCabinForm
+                  cabinToEdit={cabin}
+                  onCloseModal={() => setIsOpenModal(false)}
+                  isModal={isOpenModal}
+                />
+              </Modal>
+            )}
           </Button>
 
           {/* DUPLICATE */}
@@ -77,7 +105,8 @@ const CabinRow = ({ cabin }) => {
           </Button>
         </StyledButtons>
       </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+
+      {/* {showForm && <CreateCabinForm cabinToEdit={cabin} />} */}
     </>
   );
 };

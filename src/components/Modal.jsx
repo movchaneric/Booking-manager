@@ -1,5 +1,44 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
+import { createPortal } from "react-dom";
+import { useEffect, useRef } from "react";
+
+const Modal = ({ children, onClose, isOpenModal }) => {
+  const modalRef = useRef();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      // Check if the ref exists
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        console.log("clicked outside modal");
+        //Close modal window
+        onClose();
+      }
+    }
+
+    if (isOpenModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpenModal, onClose]);
+
+  return createPortal(
+    <Overlay>
+      <StyledModal ref={modalRef}>
+        {/* Close button - x  */}
+        <Button onClick={onClose}>
+          <HiXMark />
+        </Button>
+
+        <div>{children}</div>
+      </StyledModal>
+    </Overlay>,
+    document.body
+  );
+};
 
 const StyledModal = styled.div`
   position: fixed;
@@ -43,26 +82,8 @@ const Button = styled.button`
   & svg {
     width: 2.4rem;
     height: 2.4rem;
-    /* Sometimes we need both */
-    /* fill: var(--color-grey-500);
-    stroke: var(--color-grey-500); */
     color: var(--color-grey-500);
   }
 `;
-
-const Modal = ({ children, onClose }) => {
-  return (
-    <Overlay>
-      <StyledModal>
-        {/* Close button - x  */}
-        <Button onClick={onClose}>
-          <HiXMark />
-        </Button>
-
-        <div>{children}</div>
-      </StyledModal>
-    </Overlay>
-  );
-};
 
 export default Modal;
