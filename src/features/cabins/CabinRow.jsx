@@ -9,7 +9,7 @@ import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import { HiArchiveBox, HiPencil, HiSquare2Stack } from "react-icons/hi2";
 import useDuplicateCabin from "./useCreateCabin";
-import { useDeleteCabin } from "./useDeleteCabin";
+import useDeleteCabin from "./useDeleteCabin";
 import Modal from "../../components/Modal";
 import CabinDeletForm from "./CabinDeleteForm";
 
@@ -73,7 +73,7 @@ const CabinRow = ({ cabin }) => {
                 onClose={() => setIsOpenModal(false)}
                 isOpenModal={isOpenModal}
               >
-                <CabinDeletForm />
+                <CabinDeletForm onConfirm={() => deleteCabin(cabinId)} />
               </Modal>
             )}
           </Button>

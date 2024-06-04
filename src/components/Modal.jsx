@@ -7,23 +7,19 @@ const Modal = ({ children, onClose, isOpenModal }) => {
   const modalRef = useRef();
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      // Check if the ref exists
+    const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        console.log("clicked outside modal");
-        //Close modal window
         onClose();
       }
-    }
-
+    };
     if (isOpenModal) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside, true);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-  }, [isOpenModal, onClose]);
+  }, [onClose, isOpenModal]);
 
   return createPortal(
     <Overlay>
