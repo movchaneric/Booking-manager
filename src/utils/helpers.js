@@ -2,7 +2,7 @@ import { formatDistance, parseISO, differenceInDays } from "date-fns";
 
 // We want to make this function work for both Date objects and strings (which come from Supabase)
 export const subtractDates = (dateStr1, dateStr2) =>
-  differenceInDays(parseISO(String(dateStr1)), parseISO(String(dateStr2)));
+  differenceInDays(String(dateStr1), String(dateStr2));
 
 export const formatDistanceFromNow = (dateStr) =>
   formatDistance(parseISO(dateStr), new Date(), {
@@ -23,6 +23,35 @@ export const getToday = function (options = {}) {
   else today.setUTCHours(0, 0, 0, 0);
   return today.toISOString();
 };
+
+export function formatDate(dateString) {
+  // Create a new Date object from the string
+  const date = new Date(dateString);
+
+  // Define an array of month names
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Get the month, day, and year
+  const month = monthNames[date.getUTCMonth()];
+  const day = String(date.getUTCDate()).padStart(2, "0"); // Ensure day is always 2 digits
+  const year = date.getUTCFullYear();
+
+  // Format the date as "Month Day Year"
+  return `${month} ${day} ${year}`;
+}
 
 export const formatCurrency = (value) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(

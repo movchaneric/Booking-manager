@@ -31,7 +31,6 @@ const Main = styled.div`
 `;
 
 const Container = styled.div`
-  /* background-color: green; */
   padding: 4rem 4.8rem 6.4rem;
   max-width: 120rem;
 `;

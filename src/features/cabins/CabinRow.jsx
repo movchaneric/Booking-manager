@@ -56,7 +56,7 @@ const CabinRow = ({ cabin }) => {
 
         <Cabin>{name}</Cabin>
         <Capacity>Fits up to {maxCapacity} guests</Capacity>
-        <StyledRow>{formatCurrency(regularPrice)}</StyledRow>
+        <Price>{formatCurrency(regularPrice)}</Price>
         {discount ? (
           <Discount>{formatCurrency(discount)}</Discount>
         ) : (
@@ -154,7 +154,7 @@ const Image = styled.img`
   border: 1px solid var(--color-grey-100);
 `;
 
-const StyledRow = styled.div`
+const Price = styled.div`
   font-family: "sono";
   font-weight: 500;
   font-size: 1.6rem;

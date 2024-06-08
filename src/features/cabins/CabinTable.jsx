@@ -46,10 +46,11 @@ const CabinTable = () => {
   // console.log(sortedCabins);
 
   if (isLoading) return <Spinner />;
-  if (sortedCabins.length === 0) return <div>No cabins was added</div>;
+  if (sortedCabins.length === 0)
+    return <div>No data to show at the moment</div>;
   return (
     <>
-      <Table role="table">
+      <Table>
         <TableHeader role="header">
           <div></div>
           <div>Cabin</div>

@@ -1,9 +1,17 @@
 import Heading from "../components/Heading";
+import Row from "../components/Row";
+import BookingTable from "../features/bookings/BookingTable";
 
 const Bookings = () => {
   return (
     <div>
-      <Heading as="h1">Bookings</Heading>
+      <Row as="horizontal">
+        <Heading as="h1">All bookings</Heading>
+      </Row>
+
+      <Row>
+        <BookingTable />
+      </Row>
     </div>
   );
 };
