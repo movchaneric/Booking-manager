@@ -3,7 +3,7 @@ import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
 
-const Modal = ({ children, onClose, isOpenModal }) => {
+const Modal = ({ children, onClose }) => {
   const modalRef = useRef();
 
   useEffect(() => {
@@ -12,14 +12,13 @@ const Modal = ({ children, onClose, isOpenModal }) => {
         onClose();
       }
     };
-    if (isOpenModal) {
-      document.addEventListener("mousedown", handleClickOutside, true);
-    }
+
+    document.addEventListener("mousedown", handleClickOutside, true);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside, true);
     };
-  }, [onClose, isOpenModal]);
+  }, [onClose]);
 
   return createPortal(
     <Overlay>

@@ -1,26 +1,31 @@
 import styled from "styled-components";
 
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addNewCabin, deleteCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+
 import Button from "../../components/Button";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
-import { HiArchiveBox, HiPencil, HiSquare2Stack } from "react-icons/hi2";
-import useDuplicateCabin from "./useCreateCabin";
+import {
+  HiArchiveBox,
+  HiBars3,
+  HiOutlineDocumentDuplicate,
+  HiPencil,
+  HiSquare2Stack,
+} from "react-icons/hi2";
+import useCreateCabin from "./useCreateCabin";
 import useDeleteCabin from "./useDeleteCabin";
 import Modal from "../../components/Modal";
 import CabinDeletForm from "./CabinDeleteForm";
+import ContextMenu from "../../components/ContextMenu";
+import Heading from "../../components/Heading";
 
 const CabinRow = ({ cabin }) => {
-  //Used to mutation state in the queryClient
-  const queryClient = useQueryClient();
-  const [showForm, setShowForm] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isDeleteOpenModal, setIsDeleteOpenModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { duplicateCabin, isDuplicating } = useDuplicateCabin();
+  const { createCabin, isCreating } = useCreateCabin();
   const { deleteCabin, isDeleting } = useDeleteCabin();
 
   const {
@@ -34,7 +39,7 @@ const CabinRow = ({ cabin }) => {
   } = cabin;
 
   const handleCabinDuplicate = () => {
-    duplicateCabin({
+    createCabin({
       name: `Copy of ${cabin.name} cabin`,
       maxCapacity,
       regularPrice,
@@ -57,30 +62,12 @@ const CabinRow = ({ cabin }) => {
         ) : (
           <span>-</span>
         )}
+
+        {/* BUTTONS */}
         <StyledButtons>
-          {/* DELETE */}
-          <Button
-            variation="danger"
-            size="small"
-            onClick={() => setIsDeleteOpenModal((prevState) => !prevState)}
-            disabled={isDeleting}
-          >
-            <HiArchiveBox />
-
-            {/* Open delete modal form */}
-            {isDeleteOpenModal && (
-              <Modal
-                onClose={() => setIsOpenModal(false)}
-                isOpenModal={isOpenModal}
-              >
-                <CabinDeletForm onConfirm={() => deleteCabin(cabinId)} />
-              </Modal>
-            )}
-          </Button>
-
           {/* EDIT */}
           <Button
-            size="small"
+            size="medium"
             onClick={() => setIsOpenModal((prevState) => !prevState)}
           >
             <HiPencil />
@@ -100,13 +87,36 @@ const CabinRow = ({ cabin }) => {
           </Button>
 
           {/* DUPLICATE */}
-          <Button onClick={handleCabinDuplicate} disabled={isDuplicating}>
+          <Button
+            onClick={handleCabinDuplicate}
+            disabled={isCreating}
+            size="medium"
+          >
             <HiSquare2Stack />
           </Button>
-        </StyledButtons>
-      </TableRow>
 
-      {/* {showForm && <CreateCabinForm cabinToEdit={cabin} />} */}
+          {/* DELETE */}
+          <Button
+            variation="danger"
+            size="medium"
+            onClick={() => setIsDeleteOpenModal((prevState) => !prevState)}
+            disabled={isDeleting}
+          >
+            <HiArchiveBox />
+
+            {/* Open delete modal form */}
+            {isDeleteOpenModal && (
+              <Modal
+                onClose={() => setIsOpenModal(false)}
+                isOpenModal={isOpenModal}
+              >
+                <CabinDeletForm onConfirm={() => deleteCabin(cabinId)} />
+              </Modal>
+            )}
+          </Button>
+        </StyledButtons>
+        {/* Context Menu */}
+      </TableRow>
     </>
   );
 };
