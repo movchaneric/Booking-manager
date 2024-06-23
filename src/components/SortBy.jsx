@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
-const SortBy = ({ options }) => {
+const SortBy = ({ sortByOptions }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortByValue = searchParams.get("sort-by") || "name-asc";
@@ -12,7 +12,7 @@ const SortBy = ({ options }) => {
 
   return (
     <StyledSelect onChange={onChange} value={sortByValue}>
-      {options.map((option) => (
+      {sortByOptions?.map((option) => (
         <option value={option.value} key={option.value}>
           {option.label}
         </option>

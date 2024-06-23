@@ -3,9 +3,8 @@ import styled, { css } from "styled-components";
 
 const Filter = ({ filterField, options }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  //current filter option : all, no-discount, with-discount
+
   const currentFilter = searchParams.get(filterField);
-  console.log("current filter: ", currentFilter);
 
   function handleFilterClick(value) {
     searchParams.set(filterField, value);

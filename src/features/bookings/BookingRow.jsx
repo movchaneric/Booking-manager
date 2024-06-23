@@ -60,9 +60,7 @@ const Cabin = styled.div`
 `;
 
 const Guest = styled.div`
-  text-transform: uppercase;
-  font-family: "sono";
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.6rem;
 `;
 
@@ -77,7 +75,6 @@ const DateHead = styled.div`
 `;
 
 const Dates = styled.div`
-  font-family: "sono";
   color: var(--color-grey-400);
   display: flex;
   align-items: center;

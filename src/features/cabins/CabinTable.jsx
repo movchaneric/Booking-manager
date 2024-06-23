@@ -31,8 +31,6 @@ const CabinTable = () => {
 
   const [field, direction] = sortValue.split("-");
 
-  console.log(field, " | ", direction);
-
   const sortedCabins = filteredCabins?.sort((a, b) => b[field] - a[field]);
   // console.log(filteredCabins[0]);
 
@@ -73,6 +71,7 @@ const Table = styled.div`
   background-color: var(--color-grey-0);
   border-radius: 7px;
   overflow: hidden;
+  margin: 0.4rem 0;
 `;
 
 const TableHeader = styled.header`

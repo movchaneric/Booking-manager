@@ -2,28 +2,12 @@ import styled from "styled-components";
 import Filter from "./Filter";
 import SortBy from "./SortBy";
 
-const CabinTableOperations = () => {
+const CabinTableOperations = ({ filterOptions, sortByOptions, field }) => {
   return (
     <OperationsContainer>
-      <Filter
-        filterField="discount"
-        options={[
-          { value: "all", label: "All" },
-          { value: "no-discount", label: "No discount" },
-          { value: "with-discount", label: "With discount" },
-        ]}
-      />
+      <Filter filterField={field} options={filterOptions} />
 
-      <SortBy
-        options={[
-          { value: "name-asc", label: "Sort by name (a - z)" },
-          { value: "name-desc", label: "Sort by name (z - a)" },
-          { value: "regularPrice-asc", label: "Sort by price (high - low)" },
-          { value: "regularPrice-desc", label: "Sort by price (low - high)" },
-          { value: "maxCapacity-asc", label: "Sort by capacity (high - low)" },
-          { value: "maxCapacity-desc", label: "Sort by capacity (low - high)" },
-        ]}
-      />
+      <SortBy sortByOptions={sortByOptions} />
     </OperationsContainer>
   );
 };
