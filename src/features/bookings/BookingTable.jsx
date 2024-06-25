@@ -1,24 +1,47 @@
 import styled from "styled-components";
-import { getBookings } from "../../services/apiBookings";
+import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { getBookings } from "../../services/apiBookings";
 import BookingRow from "./BookingRow";
 import Spinner from "../../components/Spinner";
-import { useSearchParams } from "react-router-dom";
+import Pagination from "../../components/Pagination";
+import { BOOKING_PER_PAGE } from "../../utils/constants";
 
 const BookingTable = () => {
-  const { data: bookings, isLoading } = useQuery({
-    queryKey: ["bookings"],
-    queryFn: getBookings,
-  });
-
-  console.log("bookings: ", bookings);
-
   const [searchParams] = useSearchParams();
 
-  //FILTER
-  const filterValue = searchParams.get("status") || "all";
+  // PAGINATION
+  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+
+  const { data: bookings, isLoading } = useQuery({
+    queryKey: ["bookings", page],
+    queryFn: () => getBookings(page),
+    keepPreviousData: true,
+  });
+
+  // const bookingStartIndex = (page - 1) * BOOKING_PER_PAGE + 1;
+
+  // const bookingEndIndex =
+  //   page * BOOKING_PER_PAGE > bookings?.length
+  //     ? bookings.length
+  //     : page * BOOKING_PER_PAGE;
+
+  // console.log("start: ", bookingStartIndex, " || end: ", bookingEndIndex); // WORK
+
+  // FILTER
   let filteredBookings;
-  console.log("filterValue: ", filterValue);
+
+  // let paginatatedBookings;
+  // if (page) {
+  //   paginatatedBookings = bookings?.slice(
+  //     bookingStartIndex,
+  //     bookingEndIndex + 1
+  //   );
+  //   filteredBookings = paginatatedBookings;
+  // }
+
+  const filterValue = searchParams.get("status") || "all";
+
   if (filterValue === "all") filteredBookings = bookings;
   else if (filterValue === "checked-out") {
     filteredBookings = bookings.filter((book) => book.status === "checked out");
@@ -26,7 +49,7 @@ const BookingTable = () => {
     filteredBookings = bookings.filter((book) => book.status === "checked in");
   }
 
-  //SORTBY query param
+  // SORTBY query param
   const sortValue = searchParams.get("sort-by") || "date-latest";
 
   let bookingData;
@@ -36,10 +59,6 @@ const BookingTable = () => {
   if (sortValue === "cabinPrice-desc") {
     bookingData = filteredBookings?.sort((a, b) => b[field] - a[field]);
   } else if (sortValue === "cabinPrice-asc") {
-    bookingData = filteredBookings?.sort((a, b) => a[field] - b[field]);
-  } else if (sortValue === "startDate-latest") {
-    bookingData = filteredBookings?.sort((a, b) => b[field] - a[field]);
-  } else {
     bookingData = filteredBookings?.sort((a, b) => a[field] - b[field]);
   }
 
@@ -55,9 +74,15 @@ const BookingTable = () => {
         <div>amout</div>
         <div></div>
       </BookingTableHeader>
+
       {filteredBookings?.map((booking) => (
-        <BookingRow booking={booking} key={booking._id} />
+        <BookingRow booking={booking} key={booking._id} id={booking._id} />
       ))}
+
+      <Pagination
+        totalBookings={filteredBookings?.length}
+        count={bookings?.length}
+      />
     </StyledBookingTable>
   );
 };
@@ -79,6 +104,7 @@ const BookingTableHeader = styled.header`
   padding: 1.6rem 2.4rem;
   font-weight: 600;
   text-transform: uppercase;
+  background-color: var(--color-grey-100);
 `;
 
 export default BookingTable;

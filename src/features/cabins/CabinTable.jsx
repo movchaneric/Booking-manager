@@ -81,6 +81,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
   font-weight: 600;
   text-transform: uppercase;
+  background-color: var(--color-grey-100);
 `;
 
 export default CabinTable;

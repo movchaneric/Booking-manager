@@ -1,8 +1,22 @@
+import { useRef, useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { formatCurrency, formatDate, getToday } from "../../utils/helpers";
+import ContextMenu from "../../components/ContextMenu";
+import {
+  HiEllipsisVertical,
+  HiEye,
+  HiInboxArrowDown,
+  HiMiniArchiveBox,
+} from "react-icons/hi2";
 
-const BookingRow = ({ booking }) => {
-  //get the related cabin using react-query
+const BookingRow = ({ booking, id }) => {
+  const [bookId, setBookId] = useState("");
+  const [contextMenuPosition, setContextMenuPosition] = useState({
+    top: 0,
+    left: 0,
+  });
+  const bookingButtonRef = useRef();
+
   const {
     cabinPrice: amount,
     startDate,
@@ -11,21 +25,40 @@ const BookingRow = ({ booking }) => {
     numOfNights,
   } = booking;
 
+  const startYear = startDate.split("-")[0];
+  const endYear = endDate.split("-")[0];
+  const yearDuration = getToday() - startYear <= 0 ? 0 : endYear - startYear;
+
   const statusTag = {
     "checked in": "green",
     "checked out": "grey",
     unconfirmed: "blue",
   };
 
-  const startYear = startDate.split("-")[0];
-  const endYear = endDate.split("-")[0];
+  function handleContext(bookingId) {
+    setBookId(bookingId);
 
-  const yearDuration = getToday() - startYear <= 0 ? 0 : endYear - startYear;
+    const rect = bookingButtonRef.current.getBoundingClientRect();
+
+    setContextMenuPosition({
+      top: rect.bottom + window.scrollY,
+      left: rect.left + window.scrollX,
+    });
+  }
+
+  function onClose() {
+    console.log("clicked ouside context");
+    setBookId("");
+  }
+
+  function handleSeeDetails() {
+    console.log("see details with ID: ", bookId);
+  }
 
   return (
     <StyledBookingRow>
       <Cabin>001</Cabin>
-      <Guest>Eden rubin movchan</Guest>
+      <Guest>Eric movchan</Guest>
       <DatesStack>
         <DateHead>
           In {yearDuration} years &rarr; {numOfNights} nights stay
@@ -36,10 +69,87 @@ const BookingRow = ({ booking }) => {
       </DatesStack>
       <Status type={status}>{status}</Status>
       <Amount>{formatCurrency(amount)}</Amount>
+      <RowOptions
+        onClick={() => handleContext(booking._id)}
+        ref={bookingButtonRef}
+      >
+        <HiEllipsisVertical />
+      </RowOptions>
+
+      {bookId && (
+        <ContextMenu
+          onClose={onClose}
+          bookingId={booking._id}
+          position={contextMenuPosition}
+        >
+          <DetailsContainer>
+            <DetailRow onClick={handleSeeDetails}>
+              <HiEye />
+              <Text>Details</Text>
+            </DetailRow>
+            <DetailRow>
+              <HiInboxArrowDown />
+              <Text>Check in</Text>
+            </DetailRow>
+            <DetailRow>
+              <HiMiniArchiveBox />
+              <Text>Delete</Text>
+            </DetailRow>
+          </DetailsContainer>
+        </ContextMenu>
+      )}
     </StyledBookingRow>
   );
 };
 
+const Text = styled.span`
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-grey-600);
+  display: flex;
+  justify-content: start;
+`;
+
+const DetailRow = styled.div`
+  display: flex;
+  justify-content: start;
+  padding: 0 1rem 0 1rem;
+  align-items: center;
+  font-size: 1.6rem;
+  color: var(--color-grey-500);
+  gap: 1.2rem;
+
+  &:hover {
+    background-color: var(--color-grey-200);
+    transition: all 0.3s;
+  }
+`;
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background-color: var(--color-grey-50);
+`;
+const RowOptions = styled.button`
+  display: flex;
+  justify-content: center;
+  padding: 0.8rem;
+  font-size: 2.4rem;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  color: var(--color-grey-500);
+
+  &:focus {
+    outline: none; /* Ensures the outline is removed on focus */
+  }
+
+  &:hover {
+    color: var(--color-grey-900);
+    transition: all 0.3s;
+  }
+`;
 const StyledBookingRow = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 3fr 4fr 2fr 1fr 1fr;
@@ -60,7 +170,7 @@ const Cabin = styled.div`
 `;
 
 const Guest = styled.div`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.6rem;
 `;
 
