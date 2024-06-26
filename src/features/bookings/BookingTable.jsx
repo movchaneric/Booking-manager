@@ -5,40 +5,20 @@ import { getBookings } from "../../services/apiBookings";
 import BookingRow from "./BookingRow";
 import Spinner from "../../components/Spinner";
 import Pagination from "../../components/Pagination";
-import { BOOKING_PER_PAGE } from "../../utils/constants";
 
 const BookingTable = () => {
   const [searchParams] = useSearchParams();
 
   // PAGINATION
-  const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  // const page = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
 
   const { data: bookings, isLoading } = useQuery({
-    queryKey: ["bookings", page],
-    queryFn: () => getBookings(page),
-    keepPreviousData: true,
+    queryKey: ["bookings"],
+    queryFn: () => getBookings(),
   });
-
-  // const bookingStartIndex = (page - 1) * BOOKING_PER_PAGE + 1;
-
-  // const bookingEndIndex =
-  //   page * BOOKING_PER_PAGE > bookings?.length
-  //     ? bookings.length
-  //     : page * BOOKING_PER_PAGE;
-
-  // console.log("start: ", bookingStartIndex, " || end: ", bookingEndIndex); // WORK
 
   // FILTER
   let filteredBookings;
-
-  // let paginatatedBookings;
-  // if (page) {
-  //   paginatatedBookings = bookings?.slice(
-  //     bookingStartIndex,
-  //     bookingEndIndex + 1
-  //   );
-  //   filteredBookings = paginatatedBookings;
-  // }
 
   const filterValue = searchParams.get("status") || "all";
 
@@ -80,7 +60,7 @@ const BookingTable = () => {
       ))}
 
       <Pagination
-        totalBookings={filteredBookings?.length}
+        totalBookings={filteredBookings?.length || 0}
         count={bookings?.length}
       />
     </StyledBookingTable>

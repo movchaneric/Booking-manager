@@ -8,14 +8,16 @@ import {
   HiInboxArrowDown,
   HiMiniArchiveBox,
 } from "react-icons/hi2";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const BookingRow = ({ booking, id }) => {
   const [bookId, setBookId] = useState("");
+  const bookingButtonRef = useRef();
   const [contextMenuPosition, setContextMenuPosition] = useState({
     top: 0,
     left: 0,
   });
-  const bookingButtonRef = useRef();
+  const navigate = useNavigate();
 
   const {
     cabinPrice: amount,
@@ -51,10 +53,6 @@ const BookingRow = ({ booking, id }) => {
     setBookId("");
   }
 
-  function handleSeeDetails() {
-    console.log("see details with ID: ", bookId);
-  }
-
   return (
     <StyledBookingRow>
       <Cabin>001</Cabin>
@@ -83,7 +81,7 @@ const BookingRow = ({ booking, id }) => {
           position={contextMenuPosition}
         >
           <DetailsContainer>
-            <DetailRow onClick={handleSeeDetails}>
+            <DetailRow onClick={() => navigate(`/bookings/${bookId}`)}>
               <HiEye />
               <Text>Details</Text>
             </DetailRow>
@@ -118,9 +116,10 @@ const DetailRow = styled.div`
   font-size: 1.6rem;
   color: var(--color-grey-500);
   gap: 1.2rem;
+  cursor: pointer;
 
   &:hover {
-    background-color: var(--color-grey-200);
+    background-color: var(--color-grey-100);
     transition: all 0.3s;
   }
 `;

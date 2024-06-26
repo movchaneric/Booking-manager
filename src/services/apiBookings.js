@@ -1,16 +1,26 @@
 import axios from "axios";
-import { BOOKING_PER_PAGE } from "../utils/constants";
 
 export async function getBookings(page) {
-  console.log("current-page: ", page);
-
   try {
     const res = await axios.get("http://localhost:8080/bookings");
+
     const bookings = res.data.bookings;
-    console.log(bookings);
+
     return bookings;
   } catch (err) {
     console.log("getBookings err: ", err);
+  }
+}
+
+export async function getBookingId(id) {
+  try {
+    const res = await axios.get(`http://localhost:8080/booking/${id}`);
+
+    const booking = res.data.booking;
+
+    return booking;
+  } catch (err) {
+    console.log("getBookingByIdr err: ", err);
   }
 }
 
