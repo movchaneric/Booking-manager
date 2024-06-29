@@ -38,6 +38,12 @@ const BookingDetail = () => {
       {/* Main */}
       <MainConatiner>
         <BookingDetailBox booking={booking} />
+        <ButtonContainer>
+          <Button onClick={() => navigate(`/checkin/${bookId}`)}>
+            Check in
+          </Button>
+          <Button variation="danger">Delete booking</Button>
+        </ButtonContainer>
       </MainConatiner>
     </>
   );
@@ -87,5 +93,12 @@ const Status = styled.div`
       background-color: var(--color-silver-100);
       color: var(--color-silver-700);
     `}
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  padding: 2.4rem;
+  gap: 2rem;
 `;
 export default BookingDetail;

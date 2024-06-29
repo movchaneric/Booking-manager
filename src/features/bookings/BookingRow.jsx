@@ -85,7 +85,7 @@ const BookingRow = ({ booking, id }) => {
               <HiEye />
               <Text>Details</Text>
             </DetailRow>
-            <DetailRow>
+            <DetailRow onClick={() => navigate(`/checkin/${bookId}`)}>
               <HiInboxArrowDown />
               <Text>Check in</Text>
             </DetailRow>

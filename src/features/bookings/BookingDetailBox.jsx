@@ -1,15 +1,13 @@
 import styled from "styled-components";
 import Button from "../../components/Button";
 import DataItem from "../../components/DataItem";
+import { formatCurrency, formatDate } from "../../utils/helpers";
 import {
   HiOutlineHome,
   HiOutlineCurrencyDollar,
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
 } from "react-icons/hi2";
-
-import { formatCurrency, formatDate } from "../../utils/helpers";
-// import { format, isToday } from "date-fns";
 
 const BookingDetailBox = ({ booking }) => {
   console.log("BookingDetailBox booking: ", booking);
@@ -23,57 +21,53 @@ const BookingDetailBox = ({ booking }) => {
   } = booking;
 
   return (
-    <StyledBookingDetailBox>
-      <DetailHeader>
-        <DetailInfo>
-          <HiOutlineHome />
-          <StyledText>3 nights in Cabin 001</StyledText>
-        </DetailInfo>
-        <StyledText></StyledText>
-      </DetailHeader>
+    <>
+      <StyledBookingDetailBox>
+        <DetailHeader>
+          <DetailInfo>
+            <HiOutlineHome />
+            <StyledText>3 nights in Cabin 001</StyledText>
+          </DetailInfo>
+          <StyledText></StyledText>
+        </DetailHeader>
+        <DetailMain>
+          <Guest>
+            {/* Flag */}
+            <p>Eric Movchan</p>
+            <span>&bull;</span>
+            <p>eric@gmail.com</p>
+            <span>&bull;</span>
+            <p>National ID 999</p>
+          </Guest>
 
-      <DetailMain>
-        <Guest>
-          {/* Flag */}
-          <p>Eric</p>
-          <span>&bull;</span>
-          <p>eric@gmail.com</p>
-          <span>&bull;</span>
-          <p>National ID 999</p>
-        </Guest>
+          {observations && (
+            <DataItem
+              icon={<HiOutlineChatBubbleBottomCenterText />}
+              label="Observations"
+            >
+              {observations}
+            </DataItem>
+          )}
 
-        {observations && (
-          <DataItem
-            icon={<HiOutlineChatBubbleBottomCenterText />}
-            label="Observations"
-          >
-            {observations}
-          </DataItem>
-        )}
-
-        <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
-          {hasBreakfast ? "Yes" : "No"}
-        </DataItem>
-
-        <Price isPaid={isPaid}>
-          <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
-            {formatCurrency(totalPrice)}
-
-            {hasBreakfast &&
-              ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
-                extrasPrice
-              )} breakfast)`}
+          <DataItem icon={<HiOutlineCheckCircle />} label="Breakfast included?">
+            {hasBreakfast ? "Yes" : "No"}
           </DataItem>
 
-          <p>{isPaid ? "Paid" : "Will pay at property"}</p>
-        </Price>
-      </DetailMain>
+          <Price isPaid={isPaid}>
+            <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
+              {formatCurrency(totalPrice)}
 
-      <ButtonContainer>
-        <Button>Check in</Button>
-        <Button variation="danger">Delete booking</Button>
-      </ButtonContainer>
-    </StyledBookingDetailBox>
+              {hasBreakfast &&
+                ` (${formatCurrency(cabinPrice)} cabin + ${formatCurrency(
+                  extrasPrice
+                )} breakfast)`}
+            </DataItem>
+
+            <p>{isPaid ? "Paid" : "Will pay at property"}</p>
+          </Price>
+        </DetailMain>
+      </StyledBookingDetailBox>
+    </>
   );
 };
 
@@ -148,13 +142,6 @@ const DetailInfo = styled.div`
 
 const StyledBookingDetailBox = styled.div`
   border-radius: var(--border-radius-md);
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: end;
-  padding: 2.4rem;
-  gap: 2rem;
 `;
 
 export default BookingDetailBox;
