@@ -10,14 +10,17 @@ import {
 } from "react-icons/hi2";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const BookingRow = ({ booking, id }) => {
+const BookingRow = ({ booking }) => {
   const [bookId, setBookId] = useState("");
-  const bookingButtonRef = useRef();
+
   const [contextMenuPosition, setContextMenuPosition] = useState({
     top: 0,
     left: 0,
   });
+  const bookingButtonRef = useRef();
   const navigate = useNavigate();
+
+  // TEST PRINTS
 
   const {
     cabinPrice: amount,
@@ -30,12 +33,6 @@ const BookingRow = ({ booking, id }) => {
   const startYear = startDate.split("-")[0];
   const endYear = endDate.split("-")[0];
   const yearDuration = getToday() - startYear <= 0 ? 0 : endYear - startYear;
-
-  const statusTag = {
-    "checked in": "green",
-    "checked out": "grey",
-    unconfirmed: "blue",
-  };
 
   function handleContext(bookingId) {
     setBookId(bookingId);
@@ -73,7 +70,6 @@ const BookingRow = ({ booking, id }) => {
       >
         <HiEllipsisVertical />
       </RowOptions>
-
       {bookId && (
         <ContextMenu
           onClose={onClose}
@@ -123,12 +119,14 @@ const DetailRow = styled.div`
     transition: all 0.3s;
   }
 `;
+
 const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   background-color: var(--color-grey-50);
 `;
+
 const RowOptions = styled.button`
   display: flex;
   justify-content: center;
@@ -149,6 +147,7 @@ const RowOptions = styled.button`
     transition: all 0.3s;
   }
 `;
+
 const StyledBookingRow = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 3fr 4fr 2fr 1fr 1fr;
@@ -223,4 +222,5 @@ const Amount = styled.div`
   font-weight: 600;
   font-size: 1.6rem;
 `;
+
 export default BookingRow;

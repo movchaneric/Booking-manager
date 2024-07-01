@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export async function getBookings(page) {
+export async function getBookings() {
   try {
     const res = await axios.get("http://localhost:8080/bookings");
 
     const bookings = res.data.bookings;
-
+    console.log("getBookings bookings:", bookings);
     return bookings;
   } catch (err) {
     console.log("getBookings err: ", err);
@@ -21,6 +21,18 @@ export async function getBookingId(id) {
     return booking;
   } catch (err) {
     console.log("getBookingByIdr err: ", err);
+  }
+}
+
+export async function deleteBooking(id) {
+  try {
+    const res = await axios.post(
+      `http://localhost:8080/booking/delete-booking/${id}`
+    );
+
+    console.log(res);
+  } catch (err) {
+    console.log("deleteBooking err: ", err);
   }
 }
 
