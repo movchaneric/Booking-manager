@@ -4,7 +4,7 @@ import Heading from "../../components/Heading";
 import Button from "../../components/Button";
 
 const CabinDeleteForm = ({ onConfirm, isDeleting }) => {
-  console.log(isDeleting);
+  
   return (
     <Container>
       <Heading as="h2">Delete cabin</Heading>

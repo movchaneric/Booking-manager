@@ -17,7 +17,7 @@ const BookingTable = () => {
     queryFn: () => getBookings(),
   });
 
-  console.log("bookkings: ", bookings);
+
 
   // FILTER
   let filteredBookings;

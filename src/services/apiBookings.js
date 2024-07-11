@@ -24,10 +24,10 @@ export async function getBookingId(id) {
   }
 }
 
-export async function deleteBooking(id) {
+export async function deleteBooking(bookingId) {
   try {
     const res = await axios.post(
-      `http://localhost:8080/booking/delete-booking/${id}`
+      `http://localhost:8080/delete-booking/${bookingId}`
     );
 
     console.log(res);

@@ -21,8 +21,8 @@ const Modal = ({ children, onClose }) => {
   }, [onClose]);
 
   return createPortal(
-    <Overlay>
-      <StyledModal ref={modalRef}>
+    <Overlay ref={modalRef}>
+      <StyledModal>
         {/* Close button - x  */}
         <Button onClick={onClose}>
           <HiXMark />

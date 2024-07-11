@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 const BOOKING_PER_PAGE = 4;
 
 const Pagination = ({ totalBookings, count }) => {
-  console.log(count);
+  
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage = !searchParams.get("page")

@@ -1,20 +1,29 @@
 import styled from "styled-components";
 import Heading from "../../components/Heading";
 import Button from "../../components/Button";
+import { useDeleteBooking } from "./hooks/useDeleteBooking";
+import Spinner from "../../components/Spinner";
 
-const BookingDelete = ({ onConfirm, isDeleting, bookingId }) => {
-  console.log(isDeleting);
+const BookingDelete = ({ bookingId, closeModal }) => {
+  const { deleteBooking, isLoading: isDeleting } = useDeleteBooking();
+
+  {
+    isDeleting && <Spinner />;
+  }
+
   return (
     <Container>
       <Heading as="h2">Delete cabin</Heading>
       <p>
-        Are you sure you want to delete booking #{bookingId}?
+        Are you sure you want to delete booking #{bookingId.slice(1, 6)}?
         <br />
         This action cannot be undone.
       </p>
       <ButtonsBox>
-        <Button variation="secondary">Cancel</Button>
-        <Button variation="danger" onClick={onConfirm}>
+        <Button variation="secondary" onClick={closeModal}>
+          Cancel
+        </Button>
+        <Button variation="danger" onClick={() => deleteBooking(bookingId)}>
           Delete
         </Button>
       </ButtonsBox>
@@ -33,4 +42,4 @@ const ButtonsBox = styled.div`
   justify-content: end;
   gap: 1rem;
 `;
-export default CabinDeleteForm;
+export default BookingDelete;

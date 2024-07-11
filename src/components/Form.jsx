@@ -5,8 +5,6 @@ const Form = styled.form`
     props.type === "regular" &&
     css`
       padding: 2.4rem 4rem;
-
-      
       background-color: var(--color-grey-50);
       border: 1px solid var(--color-grey-100);
       border-radius: var(--border-radius-md);

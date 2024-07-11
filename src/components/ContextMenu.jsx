@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const ContextMenu = ({ children, openId, onClose, position }) => {
   const contextRef = useRef();
-  console.log("ContextMenu position | ", position);
+  
   const { top, left } = position;
 
   useEffect(() => {

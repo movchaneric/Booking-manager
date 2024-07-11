@@ -32,19 +32,17 @@ const CabinTable = () => {
   const [field, direction] = sortValue.split("-");
 
   const sortedCabins = filteredCabins?.sort((a, b) => b[field] - a[field]);
-  // console.log(filteredCabins[0]);
+  
 
   if (direction === "desc") {
     const sortedCabins = filteredCabins.sort((a, b) => a[field] - b[field]);
-    console.log("sorted DESC:", sortedCabins);
+    
   }
 
-  console.log(sortedCabins);
 
-  // console.log(sortedCabins);
 
   if (isLoading) return <Spinner />;
-  if (sortedCabins.length === 0)
+  if (sortedCabins?.length === 0)
     return <div>No data to show at the moment</div>;
   return (
     <>

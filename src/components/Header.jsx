@@ -1,8 +1,14 @@
 import styled from "styled-components";
-import Heading from "./Heading";
+import HeaderMenu from "./HeaderMenu";
+
 
 const Header = () => {
-  return <StyledHeader>Header</StyledHeader>;
+  //get logged in account
+  return (
+    <StyledHeader>
+      <HeaderMenu />
+    </StyledHeader>
+  );
 };
 
 const StyledHeader = styled.div`

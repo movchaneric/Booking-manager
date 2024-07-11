@@ -36,7 +36,7 @@ const CreateCabinForm = ({ cabinToEdit = {}, onCloseModal, isModal }) => {
   }
 
   function onError(error) {
-    console.log(error);
+   
   }
 
   const isWorking = isEditing || isCreating;

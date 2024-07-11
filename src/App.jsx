@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import BookingDetail from "./features/bookings/BookingDetail";
 
 import CheckInBooking from "./features/check-in-out/CheckInBooking";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -26,7 +27,14 @@ const App = () => {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          {/* ProtectedRoute === check if user isnt logged in */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="bookings" element={<Bookings />} />
@@ -36,9 +44,11 @@ const App = () => {
             <Route path="users" element={<Users />} />
             <Route path="settings" element={<Settings />} />
             <Route path="account" element={<Account />} />
-            <Route path="login" element={<Login />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
+
+          {/* Login page */}
+          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
       <Toaster

@@ -9,20 +9,24 @@ import {
   HiMiniArchiveBox,
 } from "react-icons/hi2";
 import { Navigate, useNavigate } from "react-router-dom";
+import BookingDelete from "./BookingDelete";
+import Modal from "../../components/Modal";
 
 const BookingRow = ({ booking }) => {
   const [bookId, setBookId] = useState("");
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({
     top: 0,
     left: 0,
   });
   const bookingButtonRef = useRef();
+
   const navigate = useNavigate();
 
   // TEST PRINTS
 
   const {
+    _id: bookingId,
     cabinPrice: amount,
     startDate,
     endDate,
@@ -51,48 +55,63 @@ const BookingRow = ({ booking }) => {
   }
 
   return (
-    <StyledBookingRow>
-      <Cabin>001</Cabin>
-      <Guest>Eric movchan</Guest>
-      <DatesStack>
-        <DateHead>
-          In {yearDuration} years &rarr; {numOfNights} nights stay
-        </DateHead>
-        <Dates>
-          {formatDate(startDate)} - {formatDate(endDate)}{" "}
-        </Dates>
-      </DatesStack>
-      <Status type={status}>{status}</Status>
-      <Amount>{formatCurrency(amount)}</Amount>
-      <RowOptions
-        onClick={() => handleContext(booking._id)}
-        ref={bookingButtonRef}
-      >
-        <HiEllipsisVertical />
-      </RowOptions>
-      {bookId && (
-        <ContextMenu
-          onClose={onClose}
-          bookingId={booking._id}
-          position={contextMenuPosition}
+    <>
+      <StyledBookingRow>
+        <Cabin>001</Cabin>
+        <Guest>Eric movchan</Guest>
+        <DatesStack>
+          <DateHead>
+            In {yearDuration} years &rarr; {numOfNights} nights stay
+          </DateHead>
+          <Dates>
+            {formatDate(startDate)} - {formatDate(endDate)}{" "}
+          </Dates>
+        </DatesStack>
+        <Status type={status}>{status}</Status>
+        <Amount>{formatCurrency(amount)}</Amount>
+        <RowOptions
+          onClick={() => handleContext(booking._id)}
+          ref={bookingButtonRef}
         >
-          <DetailsContainer>
-            <DetailRow onClick={() => navigate(`/bookings/${bookId}`)}>
-              <HiEye />
-              <Text>Details</Text>
-            </DetailRow>
-            <DetailRow onClick={() => navigate(`/checkin/${bookId}`)}>
-              <HiInboxArrowDown />
-              <Text>Check in</Text>
-            </DetailRow>
-            <DetailRow>
-              <HiMiniArchiveBox />
-              <Text>Delete</Text>
-            </DetailRow>
-          </DetailsContainer>
-        </ContextMenu>
+          <HiEllipsisVertical />
+        </RowOptions>
+        {bookId && (
+          <ContextMenu
+            onClose={onClose}
+            bookingId={booking._id}
+            position={contextMenuPosition}
+          >
+            <DetailsContainer>
+              {/* DETAILS */}
+              <DetailRow onClick={() => navigate(`/bookings/${bookId}`)}>
+                <HiEye />
+                <Text>Details</Text>
+              </DetailRow>
+              {/* CHECK IN */}
+              <DetailRow onClick={() => navigate(`/checkin/${bookId}`)}>
+                <HiInboxArrowDown />
+                <Text>Check in</Text>
+              </DetailRow>
+              {/* DELETE */}
+              <DetailRow onClick={() => setModalIsOpen(true)}>
+                <HiMiniArchiveBox />
+                <Text>Delete</Text>
+              </DetailRow>
+            </DetailsContainer>
+          </ContextMenu>
+        )}
+      </StyledBookingRow>
+
+      {/* Delete window */}
+      {modalIsOpen && (
+        <Modal onClose={() => setModalIsOpen((prevState) => !prevState)}>
+          <BookingDelete
+            bookingId={bookingId}
+            closeModal={() => setModalIsOpen((prevState) => !prevState)}
+          />
+        </Modal>
       )}
-    </StyledBookingRow>
+    </>
   );
 };
 

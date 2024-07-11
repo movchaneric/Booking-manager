@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi2";
 
 const BookingDetailBox = ({ booking }) => {
-  console.log("BookingDetailBox booking: ", booking);
+  
   const {
     hasBreakfast,
     totalPrice,

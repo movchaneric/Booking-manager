@@ -29,7 +29,7 @@ const CheckInBooking = () => {
     status,
   } = booking;
 
-  console.log("hasBreakfast: ", hasBreakfast);
+  
 
   function handleBreakfast() {
     setWantBreakfast((prevState) => !prevState);
