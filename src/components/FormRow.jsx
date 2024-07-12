@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
-const FormRow = ({ children, label, position }) => {
+const FormRow = ({ children, label, position, errors }) => {
   return (
     <StyledFormRow>
       <Label>{label}</Label>
+      <StyledError>{errors}</StyledError>
       {children}
     </StyledFormRow>
   );
 };
+
+const StyledError = styled.p`
+  color: red;
+`
 
 const StyledFormRow = styled.div`
   display: grid;

@@ -18,6 +18,15 @@ export async function postLogin({ email, password }) {
   }
 }
 
+export async function postUserRegister({fullName, email, password}){
+  try{
+    await axios.post("http://localhost:8080/auth/register", {fullName, email, password})
+  }catch(err){
+    console.log("error:", err);
+    throw err; 
+  }
+}
+
 export async function postLogout(userId){
   console.log(userId)
   try{
