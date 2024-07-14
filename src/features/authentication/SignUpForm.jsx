@@ -11,8 +11,7 @@ const SignUpForm = () => {
     const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm();
     const {register: userRegister, isLoading} = useRegiter();
     
-    function onSubmit(data) {
-        
+    function onSubmit(data) {  
         const {fullName, email, password} = data;
         userRegister({fullName, email, password},
              {

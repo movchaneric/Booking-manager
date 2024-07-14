@@ -1,6 +1,5 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import toast from "react-hot-toast";
 
 export async function postLogin({ email, password }) {
   try {
@@ -39,8 +38,16 @@ export async function postLogout(userId){
   }
 }
 
-export function getCurrentUser(){
+export async function getCurrentUser(userId){
   try{
+    //get user with http get call 
+    //store the userId that is currently in the localStorage
+    //get the latest user data
+    //Update localStorage ("profile") with the new user.
+    //return the new user.
+    // const res = await axios.get("http://localhost:8080/auth/user",userId)
+    // console.log(res)
+
     const data = localStorage.getItem("profile");
     const user = JSON.parse(data)
 

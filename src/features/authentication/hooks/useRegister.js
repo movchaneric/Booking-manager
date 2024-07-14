@@ -7,7 +7,6 @@ export function useRegiter() {
         mutationFn: ({fullName, email, password}) => registerAPI({fullName, email, password}),
         onSuccess: () => {
             toast.success("New user has been created")
-            
         },
         onError: (err) => {
             toast.error(err.message)

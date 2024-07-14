@@ -6,17 +6,25 @@ import VerticalFormRow from "../../components/VerticalFormRow";
 import { useLogin } from "./hooks/useLogin";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("testuser@example.com");
-  const [password, setPassword] = useState("password123");
+  const [email, setEmail] = useState("edenrub@gmail.com");
+  const [password, setPassword] = useState("123123");
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
+    
     //One of the values are missing
     if (!email || !password) {
       return;
     }
-    login({ email, password });
+    //Login
+    login({ email, password },{
+      onSettled: () => {
+        // Remove email and password state onSuccess or onError
+        setEmail("")
+        setPassword("")
+      }
+    });
   }
 
   return (
