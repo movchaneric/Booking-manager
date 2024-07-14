@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import Heading from "./Heading";
 
-const VerticalFormRow = ({ children, label }) => {
+const VerticalFormRow = ({ children, label, errors }) => {
   return (
     <StyledVerticalFormRow>
       <Label>{label}</Label>
+      <StyledError>{errors}</StyledError>
       {children}
     </StyledVerticalFormRow>
   );
-};
+}
+
+const StyledError = styled.p`
+  color: red;
+`
 
 const StyledVerticalFormRow = styled.div`
   display: flex;

@@ -9,3 +9,12 @@ export async function updateData({fullName, userId}){
     }
 }
 
+export async function updatePassword({userId, password}){
+    try{
+        await axios.post("http://localhost:8080/auth/update-password",{password, userId})
+    }catch(err){
+        console.log("error:", err);
+        throw err; 
+    }
+}
+

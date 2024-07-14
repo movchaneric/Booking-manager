@@ -21,9 +21,12 @@ const SignUpForm = () => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="Full name" errors={errors?.fullName?.message}>
+        {/* FULL NAME  */}
+        <FormRow label="Full name" errors={errors?.fullName?.message}>
           <Input type="text" {...register("fullName", {required: "This field is required"})}/>
         </FormRow>
+
+        {/* EMAIL */}
         <FormRow label="Email address" errors={errors?.email?.message}>
           <Input type="email" disabled={isLoading}
             id="email"
@@ -34,17 +37,23 @@ const SignUpForm = () => {
              message: "Entered value does not match email format"
           }})}/>
         </FormRow>
+        
+        {/* PASSWORD */}
         <FormRow label="Password (min 6 digits)" errors={errors?.password?.message}>
           <Input type="password" disabled={isLoading} {...register("password", {required: "This field is required", minLength:{
             value: 6, message: "Password must be over 6 digits"
           }})}/>
         </FormRow>
+
+        {/* PASSWORD-CONFIRM */}
         <FormRow label="Repeat password" errors={errors?.passwordConfirm?.message}>
         <Input type="password" disabled={isLoading} {...register("passwordConfirm", {
           required: "This field is required",
           validate: (value) => value === getValues("password") || "Passwords must match"
         })} />
-      </FormRow>
+        </FormRow>
+        
+        {/* BUTTONS */}
         <FormRow>
           <Button variation="secondary" type="reset" disabled={isLoading}>Cancel</Button>
           <Button type="submit" disabled={isLoading}>Add new user</Button>

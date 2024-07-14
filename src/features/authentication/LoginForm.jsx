@@ -6,8 +6,8 @@ import VerticalFormRow from "../../components/VerticalFormRow";
 import { useLogin } from "./hooks/useLogin";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("edenrub@gmail.com");
-  const [password, setPassword] = useState("123123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
