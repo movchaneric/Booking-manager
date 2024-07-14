@@ -38,22 +38,20 @@ export async function postLogout(userId){
   }
 }
 
-export async function getCurrentUser(userId){
+export async function getCurrentUser(){
   try{
-    //get user with http get call 
-    //store the userId that is currently in the localStorage
-    //get the latest user data
-    //Update localStorage ("profile") with the new user.
-    //return the new user.
-    // const res = await axios.get("http://localhost:8080/auth/user",userId)
-    // console.log(res)
-
     const data = localStorage.getItem("profile");
+    
     const user = JSON.parse(data)
+    const userId = user.user._id;
+    
+     // Fetch the updated user data from the server
+    const res = await axios.post("http://localhost:8080/auth/user", {userId})
+    const resUser = res.data?.user;
+    
 
     //JWT token verification
     const token = user.token;
-    
     const decodedToken = jwtDecode(token);
   
     // Current time in seconds
@@ -65,7 +63,13 @@ export async function getCurrentUser(userId){
       return null;
     }
 
-    return user?.user;
+    // Update the user data in localStorage
+    if(resUser){
+      user.user = resUser
+      localStorage.setItem("profile", JSON.stringify(user));
+    }
+
+    return resUser || null;
   }catch(err){
     console.log('ERROR: ', err.message);
     throw err

@@ -15,6 +15,7 @@ const Account = () => {
   //Get current user from cache
   const {user} = useUser()
   const {updateFullName, isLoading: isUpdaing} = useUpdateData();
+  
   const {fullName, email, _id: userId} = user
   const [userFullName, setUserFullName] = useState(fullName);
 
