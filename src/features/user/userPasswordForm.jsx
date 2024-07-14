@@ -9,7 +9,7 @@ import { useUpdatePassword } from "./hooks/useUpdatePassword";
 import { useUser } from "../authentication/hooks/useUser";
 
 const UpdatePassword = () => {
-    const { register, handleSubmit, formState: { errors }, getValues } = useForm()
+    const { register, handleSubmit, formState: { errors }, getValues, reset } = useForm()
     const {updateUserPassword, isLoading} = useUpdatePassword()
     const {user} = useUser()
     
@@ -22,7 +22,9 @@ const UpdatePassword = () => {
         if(!getValues("password") && !getValues("passwordConfirm")) return;
 
         // Update user password
-        updateUserPassword({password, userId})
+        updateUserPassword({password, userId}, {
+            onSettled: reset()
+        })
         
     }
 

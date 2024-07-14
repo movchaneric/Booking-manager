@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ButtonIcon from "./ButtonIcon";
 import { useUser } from "../features/authentication/hooks/useUser";
 import { useLogout } from "../features/authentication/hooks/useLogout";
+import DarkModeToggle from "./DarkModeToggle";
 
 const HeaderMenu = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const HeaderMenu = () => {
         <HiOutlineUser />
       </ButtonIcon>
 
+      <DarkModeToggle/>
+
       {/* Logout */}
       <ButtonIcon onClick={() => logout(userId)}>
         <HiMiniArrowRightOnRectangle />
@@ -33,6 +36,7 @@ const StyledAccount = styled.div`
   align-items: center;
   justify-content: end;
   gap: 2rem;
+  background-color: var(--color-grey-0);
 `;
 
 export default HeaderMenu;

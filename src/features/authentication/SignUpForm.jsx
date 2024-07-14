@@ -15,7 +15,7 @@ const SignUpForm = () => {
         const {fullName, email, password} = data;
         userRegister({fullName, email, password},
              {
-                onSettled: reset
+                onSettled: reset()
             })
     }
 
