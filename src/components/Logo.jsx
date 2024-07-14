@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { useDarkMode } from "../context/DarkModeContext";
 
 const sizes = {
   regular: css`
@@ -13,9 +14,14 @@ const sizes = {
 };
 
 const Logo = ({ size }) => {
+  const {isDarkMode} = useDarkMode()
   return (
     <LogoContainer>
-      <Image src="/logo.png" alt="company-logo" size={size} />
+      <Image
+        src={isDarkMode === 'dark-mode' ? "/dark-mode-img.png" : "/light-mode-img.png"}
+        alt="company-logo"
+        size={size}
+      />
     </LogoContainer>
   );
 };
